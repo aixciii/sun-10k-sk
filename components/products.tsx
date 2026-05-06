@@ -48,7 +48,7 @@ export function Products() {
               {/* Image */}
               <img
                 src={inverter.imageUrl}
-                alt={inverter.name}
+                alt="Deye SUN-10K-SG05LP3-EU hybridný menič 10kW"
                 crossOrigin="anonymous"
                 style={{ 
                   width: '100%',
@@ -139,7 +139,7 @@ export function Products() {
               {/* Image */}
               <img
                 src={battery.imageUrl}
-                alt={battery.name}
+                alt="Deye SE-F12-C LV batéria LiFePO4 11.8kWh"
                 crossOrigin="anonymous"
                 style={{ 
                   width: '100%',

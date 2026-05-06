@@ -58,7 +58,7 @@ export function Hero() {
                 <div className="h-[280px] bg-white flex items-center justify-center p-4">
                   <img
                     src={inverter.imageUrl}
-                    alt={inverter.name}
+                    alt="Deye SUN-10K-SG05LP3-EU hybridný menič 10kW"
                     crossOrigin="anonymous"
                     style={{
                       maxWidth: '100%',
