@@ -2,7 +2,8 @@
 
 import { useState, useEffect } from 'react'
 import { Button } from '@/components/ui/button'
-import { Menu, X, Sun } from 'lucide-react'
+import { Menu, X, Sun, Phone } from 'lucide-react'
+import { siteConfig } from '@/lib/site-config'
 
 export function Navigation() {
   const [isScrolled, setIsScrolled] = useState(false)
@@ -52,8 +53,15 @@ export function Navigation() {
             ))}
           </div>
 
-          {/* CTA Button */}
-          <div className="hidden md:block">
+          {/* Phone + CTA Button */}
+          <div className="hidden md:flex items-center gap-4">
+            <a 
+              href={`tel:${siteConfig.contact.phone.replace(/\s/g, '')}`}
+              className="flex items-center gap-1.5 text-sm text-[#6B7280] hover:text-[#1E88E5] transition-colors"
+            >
+              <Phone className="h-4 w-4" />
+              {siteConfig.contact.phone}
+            </a>
             <Button 
               asChild 
               className="bg-[#1E88E5] hover:bg-[#1976D2] text-white font-medium rounded-lg h-10 px-5"

@@ -15,7 +15,11 @@ export const siteConfig = {
     name: 'SK Partner s.r.o.',
     website: 'SUN-10K.sk',
     tagline: 'Oficiálny importér Deye',
-    location: 'Bratislava',
+    address: 'Staviteľská ulica 3, 831 04 Bratislava - Rača',
+    addressShort: 'Staviteľská ulica 3, 831 04 Bratislava',
+    ico: '56032340',
+    dic: '2122176936',
+    icDph: 'SK2122176936',
     country: 'Slovensko',
     year: 2025,
   },
@@ -25,7 +29,7 @@ export const siteConfig = {
   // ==========================================
   contact: {
     email: 'sales@sk-partner.sk',
-    // Add phone if needed: phone: '+421 XXX XXX XXX',
+    phone: '+421 948 450 458',
   },
 
   // ==========================================
@@ -159,7 +163,7 @@ export const siteConfig = {
   // FOOTER
   // ==========================================
   footer: {
-    copyright: '© 2025 SK Partner s.r.o. · Všetky práva vyhradené',
+    copyright: '© 2025 SK Partner s.r.o. · Oficiálny importér Deye · Všetky práva vyhradené',
   },
 }
 

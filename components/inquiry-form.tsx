@@ -14,7 +14,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select'
-import { CheckCircle, ArrowRight } from 'lucide-react'
+import { CheckCircle, ArrowRight, Phone, Mail, MapPin, Building2 } from 'lucide-react'
+import { siteConfig } from '@/lib/site-config'
 
 export function InquiryForm() {
   const [isSubmitted, setIsSubmitted] = useState(false)
@@ -30,7 +31,7 @@ export function InquiryForm() {
     consent: false,
   })
 
-  const handleSubmit = (e: FormEvent) => {
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault()
     setHasAttemptedSubmit(true)
     
@@ -44,18 +45,28 @@ export function InquiryForm() {
       return
     }
 
-    const subject = encodeURIComponent(`Dopyt: ${formData.interest || 'Všeobecný dotaz'}`)
-    const body = encodeURIComponent(
-      `Meno / Firma: ${formData.name}\n` +
-      `Email: ${formData.email}\n` +
-      `Telefón: ${formData.phone || 'Neuvedený'}\n` +
-      `Záujem o: ${formData.interest || 'Neuvedený'}\n` +
-      `Typ zákazníka: ${formData.customerType || 'Neuvedený'}\n\n` +
-      `Správa:\n${formData.message || 'Bez správy'}`
-    )
-    
-    window.location.href = `mailto:sales@sk-partner.sk?subject=${subject}&body=${body}`
-    setIsSubmitted(true)
+    try {
+      const response = await fetch("https://formspree.io/f/mjglrldq", {
+        method: "POST",
+        headers: { 
+          "Content-Type": "application/json",
+          "Accept": "application/json"
+        },
+        body: JSON.stringify({
+          name: formData.name,
+          email: formData.email,
+          phone: formData.phone,
+          interest: formData.interest,
+          customerType: formData.customerType,
+          message: formData.message
+        })
+      })
+      if (response.ok) {
+        setIsSubmitted(true)
+      }
+    } catch (error) {
+      console.error("Form error:", error)
+    }
   }
 
   if (isSubmitted) {
@@ -80,19 +91,84 @@ export function InquiryForm() {
     )
   }
 
+  const { company, contact } = siteConfig
+
   return (
     <section id="kontakt" className="py-12 md:py-16 bg-[#F8FAFF]">
-      <div className="max-w-xl mx-auto px-4 sm:px-6 lg:px-8">
-        <Card className="shadow-lg border-[#E5E7EB] rounded-xl">
-          <CardHeader className="text-center pb-2">
-            <CardTitle className="text-2xl md:text-3xl text-[#1A1A2E]">
-              Získajte cenovú ponuku
-            </CardTitle>
-            <CardDescription className="text-base text-[#6B7280]">
-              Odpovieme do 24 hodín. Bez záväzkov.
-            </CardDescription>
-          </CardHeader>
-          <CardContent className="pt-4">
+      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="grid md:grid-cols-5 gap-8">
+          {/* Contact Info - Left Side */}
+          <div className="md:col-span-2 space-y-6">
+            <div>
+              <h3 className="text-2xl font-bold text-[#1A1A2E] mb-2">Kontaktujte nás</h3>
+              <p className="text-[#6B7280]">Sme tu pre vás každý pracovný deň.</p>
+            </div>
+            
+            <div className="space-y-4">
+              <a 
+                href={`tel:${contact.phone.replace(/\s/g, '')}`}
+                className="flex items-center gap-3 text-[#1A1A2E] hover:text-[#1E88E5] transition-colors"
+              >
+                <div className="w-10 h-10 rounded-lg bg-[#E3F2FD] flex items-center justify-center">
+                  <Phone className="h-5 w-5 text-[#1E88E5]" />
+                </div>
+                <div>
+                  <div className="text-sm text-[#6B7280]">Telefón</div>
+                  <div className="font-medium">{contact.phone}</div>
+                </div>
+              </a>
+
+              <a 
+                href={`mailto:${contact.email}`}
+                className="flex items-center gap-3 text-[#1A1A2E] hover:text-[#1E88E5] transition-colors"
+              >
+                <div className="w-10 h-10 rounded-lg bg-[#E3F2FD] flex items-center justify-center">
+                  <Mail className="h-5 w-5 text-[#1E88E5]" />
+                </div>
+                <div>
+                  <div className="text-sm text-[#6B7280]">Email</div>
+                  <div className="font-medium">{contact.email}</div>
+                </div>
+              </a>
+
+              <div className="flex items-start gap-3">
+                <div className="w-10 h-10 rounded-lg bg-[#E3F2FD] flex items-center justify-center flex-shrink-0">
+                  <MapPin className="h-5 w-5 text-[#1E88E5]" />
+                </div>
+                <div>
+                  <div className="text-sm text-[#6B7280]">Adresa</div>
+                  <div className="font-medium text-[#1A1A2E]">{company.address}</div>
+                </div>
+              </div>
+
+              <div className="flex items-start gap-3">
+                <div className="w-10 h-10 rounded-lg bg-[#E3F2FD] flex items-center justify-center flex-shrink-0">
+                  <Building2 className="h-5 w-5 text-[#1E88E5]" />
+                </div>
+                <div>
+                  <div className="text-sm text-[#6B7280]">Firemné údaje</div>
+                  <div className="text-sm text-[#1A1A2E]">
+                    <div>IČO: {company.ico}</div>
+                    <div>DIČ: {company.dic}</div>
+                    <div>IČ DPH: {company.icDph}</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Form - Right Side */}
+          <div className="md:col-span-3">
+            <Card className="shadow-lg border-[#E5E7EB] rounded-xl">
+              <CardHeader className="text-center pb-2">
+                <CardTitle className="text-2xl md:text-3xl text-[#1A1A2E]">
+                  Získajte cenovú ponuku
+                </CardTitle>
+                <CardDescription className="text-base text-[#6B7280]">
+                  Odpovieme do 24 hodín. Bez záväzkov.
+                </CardDescription>
+              </CardHeader>
+              <CardContent className="pt-4">
             <form onSubmit={handleSubmit} className="space-y-5" noValidate>
               {/* Name */}
               <div className="space-y-1.5">
@@ -232,6 +308,8 @@ export function InquiryForm() {
             </form>
           </CardContent>
         </Card>
+          </div>
+        </div>
       </div>
     </section>
   )
