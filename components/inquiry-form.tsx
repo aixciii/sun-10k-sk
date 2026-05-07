@@ -62,6 +62,14 @@ export function InquiryForm() {
         })
       })
       if (response.ok) {
+        // Google Ads conversion tracking
+        if (typeof window !== 'undefined' && typeof (window as any).gtag === 'function') {
+          (window as any).gtag('event', 'conversion', {
+            send_to: 'AW-18143606743/gvhECOnDpKgcENfvxctD',
+            value: 1.0,
+            currency: 'EUR'
+          })
+        }
         setIsSubmitted(true)
       }
     } catch (error) {
