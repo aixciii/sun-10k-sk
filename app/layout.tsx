@@ -14,7 +14,7 @@ export const metadata: Metadata = {
   description: 'Hybridný 3-fázový menič Deye SUN-10K-SG05LP3-EU. Cena 1 380 € bez DPH. Skladom v Bratislave. Doručenie 1–2 dni. Záruka 10 rokov. Oficiálny importér SK Partner s.r.o.',
   keywords: 'Deye, hybridný menič, 10kW, fotovoltaika, solárny menič, off-grid, on-grid, LiFePO4 batéria, Slovensko',
   alternates: {
-    canonical: 'https://www.sun-10k.sk/',
+    canonical: 'https://sun-10k.sk/',
   },
   icons: {
     icon: [
